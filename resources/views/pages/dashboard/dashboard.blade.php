@@ -29,9 +29,10 @@
             </div>
 
         </div>
-        <x-checkbox label="Receive Alert" />
 
+        <!-- <x-checkbox label="Receive Alert" />
         <x-checkbox label="Receive Alert" position="left" />
+         -->
         <!-- Cards -->
         <div class="grid grid-cols-12 gap-6">
 
