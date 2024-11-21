@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Event;
+use App\Models\Log;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -33,14 +36,25 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
+        // Limitação de tentativas de login
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
 
             return Limit::perMinute(5)->by($throttleKey);
         });
 
+        // Limitação de tentativas de dois fatores
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
+        });
+
+        // Registrar evento de login para criar o log
+        Event::listen(Login::class, function (Login $event) {
+            Log::create([
+                'user_id' => $event->user->id, // Associar o log ao usuário autenticado
+                'action' => 'Login',
+                'description' => 'Usuário efetuou login no sistema.',
+            ]);
         });
     }
 }

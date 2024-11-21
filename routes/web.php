@@ -11,10 +11,11 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\CampaignController;
 use App\Livewire\UserComponent;
-
+use App\Livewire\Logs;
 
 Route::redirect('/', 'login');
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/logs', Logs::class)->name('logs');
 
 Route::get('/usuarios', UserComponent::class)->name('usuarios');
 

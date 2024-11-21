@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -26,5 +27,22 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * Render an exception into an HTTP response.
+     */
+    public function render($request, Throwable $exception)
+    {
+        // Customizar a resposta para o erro 429 (ThrottleRequestsException)
+        if ($exception instanceof ThrottleRequestsException) {
+            // Obter o tempo de espera antes de novas tentativas
+            $retryAfter = $exception->getHeaders()['Retry-After'] ?? 60;
+
+            // Renderizar a view personalizada
+            return response()->view('errors.429', ['retryAfter' => $retryAfter], 429);
+        }
+
+        return parent::render($request, $exception);
     }
 }

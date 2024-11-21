@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Models\Log;  // Importar o modelo Log corretamente
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
@@ -26,10 +26,20 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        return User::create([
+        // Criar o novo usuário
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+
+        // Criar o log de ação usando a mesma lógica do Tinker
+        $log = new Log();
+        $log->user_id = $user->id;
+        $log->action = 'Novo Registro';
+        $log->description = 'Usuário registrado: ' . $user->name;
+        $log->save();
+
+        return $user;
     }
 }
