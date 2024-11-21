@@ -9,14 +9,11 @@
                 <h1 class="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">Dashboard</h1>
             </div>
 
-            <!-- Right: Actions -->
+            <!x-- Right: Actions -->
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
 
                 <!-- Filter button -->
                 <x-dropdown-filter align="right" />
-
-                <!-- Datepicker built with flatpickr -->
-                <x-datepicker />
 
                 <!-- Add view button -->
                 <button class="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white">
@@ -29,29 +26,9 @@
             </div>
 
         </div>
-
-        <!-- <x-checkbox label="Receive Alert" />
-        <x-checkbox label="Receive Alert" position="left" />
-         -->
-        <!-- Cards -->
-        <div class="grid grid-cols-12 gap-6">
-
-            <!-- Line chart (Acme Plus) -->
-            <x-dashboard.dashboard-card-01 :dataFeed="$dataFeed" />
-
-            <!-- Line chart (Acme Advanced) -->
-            <x-dashboard.dashboard-card-02 :dataFeed="$dataFeed" />
-
-            <!-- Line chart (Acme Professional) -->
-            <x-dashboard.dashboard-card-03 :dataFeed="$dataFeed" />
-
-            <!-- Bar chart (Direct vs Indirect) -->
-            <x-dashboard.dashboard-card-04 />
-
-            <!-- Line chart (Real Time Value) -->
-            <x-dashboard.dashboard-card-05 />
+        <!-- Content side -->
+        <p>Teste</p>
 
         </div>
-
     </div>
 </x-app-layout>

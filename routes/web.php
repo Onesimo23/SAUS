@@ -10,27 +10,24 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\CampaignController;
+use App\Livewire\UserComponent;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::redirect('/', 'login');
-
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+
+Route::get('/usuarios', UserComponent::class)->name('usuarios');
 
     // Route for the getting the data feed
     Route::get('/json-data-feed', [DataFeedController::class, 'getDataFeed'])->name('json_data_feed');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/dashboard/analytics', [DashboardController::class, 'analytics'])->name('analytics');
+    Route::get('//* The `dashboard/analytics` route is pointing to the `analytics`
+    method within the `DashboardController`. When a user accesses
+    the `/dashboard/analytics` URL, it will trigger the `analytics`
+    method in the `DashboardController` to display the analytics
+    dashboard page. */
+    dashboard/analytics', [DashboardController::class, 'analytics'])->name('analytics');
     Route::get('/dashboard/fintech', [DashboardController::class, 'fintech'])->name('fintech');
     // Route::get('/ecommerce/customers', [CustomerController::class, 'index'])->name('customers');
     // Route::get('/ecommerce/orders', [OrderController::class, 'index'])->name('orders');
