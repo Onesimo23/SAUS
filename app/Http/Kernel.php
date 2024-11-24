@@ -22,7 +22,11 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
+    protected $routeMiddleware = [
+        '2fa' => \PragmaRX\Google2FALaravel\Middleware::class,
+        '2fa' => \App\Http\Middleware\TwoFactorAuthentication::class,
 
+    ];
     /**
      * The application's route middleware groups.
      *

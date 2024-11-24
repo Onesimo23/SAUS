@@ -27,6 +27,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'google2fa_secret',
+
     ];
 
     /**
@@ -39,6 +41,8 @@ class User extends Authenticatable
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
+        'google2fa_secret',
+
     ];
 
     /**

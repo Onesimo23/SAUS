@@ -29,14 +29,10 @@
         </script>         
     </head>
     <body class="font-inter antialiased bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-400">
-
         <main class="bg-white dark:bg-gray-900">
-
             <!-- Content -->
             <div class="w-full">
-
                 <div class="min-h-[100dvh] h-full">
-
                     <!-- Header -->
                     <div>
                         <div class="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
@@ -49,18 +45,13 @@
                         </div>
                     </div>
 
+                    <!-- Slot Content -->
                     <div class="w-full max-w-3xl mx-auto px-4 py-8">
-                        {{ $slot }}
+                        @yield('content')
                     </div>
-
                 </div>
-
             </div>
-
-            </div>
-
         </main>   
-
         @livewireScriptConfig
     </body>
 </html>
