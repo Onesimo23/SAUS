@@ -1,14 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DataFeedController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\MemberController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\JobController;
+use App\Livewire\Chat;
 use App\Http\Controllers\Google2FAController;
 use App\Livewire\UserComponent;
 use App\Livewire\Logs;
@@ -22,18 +16,17 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/2fa', [Google2FAController::class, 'store'])->name('2fa.store');
     Route::get('/2fa/verify', [Google2FAController::class, 'verify'])->name('2fa.verify');
     Route::post('/2fa/verify', [Google2FAController::class, 'validateCode'])->name('2fa.validate');
-    
+
+    Route::get('/chat', Chat::class);
+
     // Rotas que não precisam de 2FA
     Route::get('/logs', Logs::class)->name('logs');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
 });
 
 // Rotas que precisam de 2FA
 Route::middleware(['auth:sanctum', 'verified', '2fa'])->group(function () {
     // Rotas que precisam de 2FA
-    
+
     Route::get('/usuarios', UserComponent::class)->name('usuarios');
 });
-
-    
