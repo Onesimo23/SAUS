@@ -6,8 +6,23 @@ use App\Livewire\Chat;
 use App\Http\Controllers\Google2FAController;
 use App\Livewire\UserComponent;
 use App\Livewire\Logs;
+use App\Http\Controllers\Auth\GithubController;
+use App\Http\Controllers\ProjectController;
+
 
 Route::redirect('/', 'login');
+
+Route::get('/auth/github', [GithubController::class, 'redirectToGithub'])->name('auth.github');
+Route::get('/auth/github/callback', [GithubController::class, 'handleGithubCallback'])->name('auth.github.callback');
+Route::resource('projects', ProjectController::class);
+
+Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+
+// Verificação de permissões via policy para cada ação
+Route::get('/projects/{project}', [ProjectController::class, 'show'])->middleware('can:view,project')->name('projects.show');
+Route::get('/projects/{project}/edit', [ProjectController::class, 'edit'])->middleware('can:update,project')->name('projects.edit');
+Route::get('/projects/{project}/manage', [ProjectController::class, 'manage'])->middleware('can:manage,project')->name('projects.manage');
+Route::post('/projects/{project}/add-user', [ProjectController::class, 'addUser'])->middleware('can:manage,project')->name('projects.addUser');
 
 // Rotas que precisam apenas de autenticação básica
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
